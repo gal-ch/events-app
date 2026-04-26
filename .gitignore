@@ -1,0 +1,26 @@
+node_modules/
+.pnpm-store/
+dist/
+.DS_Store
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vite
+vite.config.*.timestamp-*
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Env files (keep secrets out of git)
+.env
+.env.*
+node_modules
+dist
+.pnpm-store
+.DS_Store
+*.log
+.env
+.env.local
