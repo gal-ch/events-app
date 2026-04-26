@@ -1,0 +1,19 @@
+{
+  "name": "events-app",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter @events/frontend dev",
+    "build": "pnpm -r build",
+    "db:push": "pnpm --filter @events/api exec prisma db push",
+    "db:seed": "pnpm --filter @events/api exec tsx prisma/seed.ts"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "@prisma/client",
+      "@prisma/engines",
+      "esbuild",
+      "prisma"
+    ]
+  }
+}
