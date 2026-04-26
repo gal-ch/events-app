@@ -1,10 +1,7 @@
-import type { Event, PaginatedResponse } from '@/shared/types'
-import {
-  buildEventsParams,
-  getResponse,
-  parseContentRangeTotal,
-  type PostgrestQueryParams,
-} from '@/shared/utils'
+import type { Event, PaginatedResponse } from '@events/types'
+import type { PostgrestQueryParams } from '@/shared/utils/postgrest'
+import { getResponse } from '@/shared/utils/http'
+import { buildEventsParams, parseContentRangeTotal } from '@/shared/utils/postgrest'
 
 export type FetchEventsParams = PostgrestQueryParams
 

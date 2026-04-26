@@ -1,5 +1,5 @@
-import type { EventStatus } from '@/shared/types'
-import { cn } from '@/shared/utils'
+import type { EventStatus } from '@events/types'
+import { cn } from '@/shared/utils/cn'
 
 const STYLES: Record<EventStatus, string> = {
   UPCOMING: 'bg-blue-100 text-blue-800',

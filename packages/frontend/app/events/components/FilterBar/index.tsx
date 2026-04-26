@@ -1,6 +1,6 @@
 import * as Select from '@radix-ui/react-select'
-import type { FilterState } from '@/shared/types'
-import { cn } from '@/shared/utils'
+import type { FilterState } from '@events/types'
+import { cn } from '@/shared/utils/cn'
 
 const STATUSES = ['UPCOMING', 'ONGOING', 'COMPLETED', 'CANCELLED']
 const CATEGORIES = ['Music', 'Tech', 'Sports', 'Art', 'Food', 'Business', 'Education']

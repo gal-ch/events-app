@@ -1,5 +1,5 @@
-import { cn } from '@/shared/utils'
-import type { SortState } from '@/shared/types'
+import { cn } from '@/shared/utils/cn'
+import type { SortState } from '@events/types'
 
 interface Props {
   label: string

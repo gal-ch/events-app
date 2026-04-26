@@ -1,4 +1,4 @@
-import type { Event, SortState } from '@/shared/types'
+import type { Event, SortState } from '@events/types'
 import { StatusBadge } from '../StatusBadge'
 import { SortableHeader } from './SortableHeader'
 
