@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from '../shared/modules/prisma/prisma.service'
+import { PrismaService } from '@/shared/modules/prisma/prisma.service'
 import type { PaginatedResponse, Event } from '@events/types'
 
 interface ListParams {

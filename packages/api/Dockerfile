@@ -23,4 +23,4 @@ WORKDIR /app/packages/api
 
 EXPOSE 3001
 
-CMD ["sh", "-c", "npx prisma db push --accept-data-loss && pnpm exec nest start --watch"]
+CMD ["sh", "-c", "npx prisma db push --accept-data-loss && NODE_OPTIONS='-r tsconfig-paths/register' pnpm exec nest start --watch"]

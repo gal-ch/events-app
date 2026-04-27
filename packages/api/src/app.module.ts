@@ -1,5 +1,5 @@
 import { Module, Controller, Get } from '@nestjs/common'
-import { EventsModule } from './events/events.module'
+import { EventsModule } from '@/events/events.module'
 
 @Controller()
 class HealthController {
