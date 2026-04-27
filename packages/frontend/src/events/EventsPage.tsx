@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import type { FilterState, SortState } from '@events/types'
-import { fetchEvents } from '@/events/services/api'
-import { EventsTable } from './components/EventsTable'
-import { FilterBar } from './components/FilterBar'
-import { Pagination } from './components/Pagination'
+import { fetchEvents } from './services/api'
+import { EventsTable } from './components/EventsTable/EventsTable'
+import { FilterBar } from './components/FilterBar/FilterBar'
+import { Pagination } from './components/Pagination/Pagination'
 
 export function EventsPage() {
   const [page, setPage] = useState(1)
@@ -12,21 +12,27 @@ export function EventsPage() {
   const [sort, setSort] = useState<SortState>({ sortBy: 'startDate', sortOrder: 'desc' })
   const [filters, setFilters] = useState<FilterState>({ search: '', status: '', category: '' })
 
-  const params = {
-    page,
-    pageSize,
-    sortBy: sort.sortBy,
-    sortOrder: sort.sortOrder,
-    status: filters.status || undefined,
-    category: filters.category || undefined,
-    search: filters.search || undefined,
-  }
+  const params = useMemo(
+    () => ({
+      page,
+      pageSize,
+      sortBy: sort.sortBy,
+      sortOrder: sort.sortOrder,
+      status: filters.status || undefined,
+      category: filters.category || undefined,
+      search: filters.search || undefined,
+    }),
+    [page, pageSize, sort.sortBy, sort.sortOrder, filters.status, filters.category, filters.search],
+  )
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['events', params],
     queryFn: () => fetchEvents(params),
     placeholderData: keepPreviousData,
   })
+
+  const total = data?.total ?? 0
+  const totalPages = Math.max(1, Math.ceil(total / pageSize))
 
   const handleSort = (field: SortState['sortBy']) => {
     setPage(1)
@@ -69,8 +75,8 @@ export function EventsPage() {
       <Pagination
         page={page}
         pageSize={pageSize}
-        total={data?.total ?? 0}
-        totalPages={data?.totalPages ?? 1}
+        total={total}
+        totalPages={totalPages}
         onPageChange={setPage}
         onPageSizeChange={(size) => {
           setPage(1)

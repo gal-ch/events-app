@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { getResponse } from '@/shared/utils/http'
-import { parseContentRangeTotal } from '@/shared/utils/postgrest'
+import { getResponse } from '../utils/http'
+import { parseContentRangeTotal } from '../utils/postgrest'
 
 export interface PostgrestListResult<T> {
   data: T[]

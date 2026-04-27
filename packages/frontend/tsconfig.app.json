@@ -18,8 +18,8 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./app/*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["app", "main.tsx", "vite-env.d.ts"]
+  "include": ["src", "vite-env.d.ts"]
 }
