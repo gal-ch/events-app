@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '@/shared/modules/prisma/prisma.service'
 import type { PaginatedResponse, Event } from '@events/types'
+import { buildEventsWhere } from './events.where'
 
 interface ListParams {
   page: number
@@ -19,15 +20,11 @@ export class EventsService {
   async list(params: ListParams): Promise<PaginatedResponse> {
     const { page, pageSize, sortBy, sortOrder, status, category, search } = params
 
-    const where: Record<string, unknown> = {}
-    if (status) where.status = status
-    if (category) where.category = category
-    if (search) {
-      where.OR = [
-        { title: { contains: search, mode: 'insensitive' } },
-        { location: { contains: search, mode: 'insensitive' } },
-      ]
-    }
+    const where = buildEventsWhere({
+      statuses: status ? [status] : undefined,
+      categories: category ? [category] : undefined,
+      search,
+    })
 
     const orderBy = sortBy ? { [sortBy]: sortOrder ?? 'asc' } : { startDate: 'desc' as const }
 

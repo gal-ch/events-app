@@ -20,6 +20,7 @@ Full-stack monorepo with a filterable, sortable, paginated events table. Fronten
 
 ```bash
 pnpm install
+export OPENAI_API_KEY=sk-...   # required for the natural-language search endpoint
 docker compose up -d        # db + postgrest + api
 pnpm db:push                # apply Prisma schema
 pnpm db:seed                # 100 fake events
@@ -27,6 +28,15 @@ pnpm dev                    # frontend on :5173
 ```
 
 Open http://localhost:5173.
+
+### Environment variables
+
+| Var | Where | Purpose |
+|-----|-------|---------|
+| `OPENAI_API_KEY` | `api` service | Required for `POST /events/nl-search` (natural-language → Prisma filter). |
+| `OPENAI_MODEL` | `api` service | Model used for the NL parser. Defaults to `gpt-4o-mini`. |
+| `VITE_API_BASE_URL` | frontend | PostgREST base URL (default `http://localhost:3010`). |
+| `VITE_NEST_API_BASE_URL` | frontend | NestJS API base URL for NL search (default `http://localhost:3011`). |
 
 ## Layout
 

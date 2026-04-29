@@ -1,18 +1,27 @@
-import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
+import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios'
 
 let authToken: string | undefined
+
+function attachAuthInterceptor(instance: AxiosInstance) {
+  instance.interceptors.request.use((config) => {
+    if (authToken) {
+      config.headers.Authorization = `Bearer ${authToken}`
+    }
+    return config
+  })
+}
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   responseType: 'json',
 })
+attachAuthInterceptor(axiosInstance)
 
-axiosInstance.interceptors.request.use((config) => {
-  if (authToken) {
-    config.headers.Authorization = `Bearer ${authToken}`
-  }
-  return config
+const nestAxios = axios.create({
+  baseURL: import.meta.env.VITE_NEST_API_BASE_URL ?? 'http://localhost:3011',
+  responseType: 'json',
 })
+attachAuthInterceptor(nestAxios)
 
 export function setToken(token: string | undefined) {
   authToken = token
@@ -36,7 +45,7 @@ export const get = async <T = unknown>(
 
 export const post = async <T = unknown>(
   url: string,
-  body: Record<string, unknown> = {},
+  body: unknown = {},
   config?: AxiosRequestConfig,
 ): Promise<T> =>
   await axiosInstance
@@ -46,7 +55,7 @@ export const post = async <T = unknown>(
 
 export const put = async <T = unknown>(
   url: string,
-  body: Record<string, unknown>,
+  body: unknown,
   config?: AxiosRequestConfig,
 ): Promise<T> =>
   await axiosInstance
@@ -57,6 +66,16 @@ export const put = async <T = unknown>(
 export const del = async <T = unknown>(url: string, config?: AxiosRequestConfig): Promise<T> =>
   await axiosInstance
     .delete<T>(url, config)
+    .then((res: AxiosResponse<T>) => res.data)
+    .catch((error) => Promise.reject(error))
+
+export const nestPost = async <T = unknown>(
+  url: string,
+  body: unknown = {},
+  config?: AxiosRequestConfig,
+): Promise<T> =>
+  await nestAxios
+    .post<T>(url, body, config)
     .then((res: AxiosResponse<T>) => res.data)
     .catch((error) => Promise.reject(error))
 

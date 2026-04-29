@@ -1,6 +1,13 @@
-import type { Event } from '@events/types'
+import type {
+  Event,
+  NlSearchParsedFilter,
+  NlSearchRequest,
+  NlSearchResponse,
+  PaginatedResponse,
+  StructuredListRequest,
+} from '@/shared/types'
 import type { PostgrestQueryParams } from '@/shared/utils/postgrest'
-import { getResponse } from '@/shared/utils/http'
+import { getResponse, nestPost } from '@/shared/utils/http'
 import { buildEventsParams, parseContentRangeTotal } from '@/shared/utils/postgrest'
 
 export type FetchEventsParams = PostgrestQueryParams
@@ -19,4 +26,15 @@ export async function fetchEvents(params: FetchEventsParams = {}): Promise<Fetch
     data: res.data,
     total: parseContentRangeTotal(res.headers['content-range']),
   }
+}
+
+export async function searchByNaturalLanguage(req: NlSearchRequest): Promise<NlSearchResponse> {
+  return nestPost<NlSearchResponse>('/events/nl-search', { ...req })
+}
+
+export async function fetchEventsByFilter(
+  filter: NlSearchParsedFilter,
+  opts: Omit<StructuredListRequest, 'filter'> = {},
+): Promise<PaginatedResponse> {
+  return nestPost<PaginatedResponse>('/events/list', { filter, ...opts })
 }
