@@ -42,3 +42,36 @@ export interface FilterState {
   category: string
   status: string
 }
+
+export interface NlSearchParsedFilter {
+  statuses?: EventStatus[]
+  categories?: string[]
+  notStatuses?: EventStatus[]
+  notCategories?: string[]
+  search?: string
+  startDateGte?: string
+  startDateLte?: string
+  capacityGt?: number
+  capacityLt?: number
+  sortBy?: keyof Event
+  sortOrder?: 'asc' | 'desc'
+  combinator?: 'AND' | 'OR'
+}
+
+export interface NlSearchRequest {
+  query: string
+  page?: number
+  pageSize?: number
+}
+
+export interface NlSearchResponse extends PaginatedResponse {
+  parsedFilter: NlSearchParsedFilter
+}
+
+export interface StructuredListRequest {
+  filter: NlSearchParsedFilter
+  page?: number
+  pageSize?: number
+  sortBy?: keyof Event
+  sortOrder?: 'asc' | 'desc'
+}

@@ -49,9 +49,8 @@ Every module under `src/<module>/` follows this layout:
 <module>/
 ├── services/
 │   └── api.ts            # fetch functions and query-string builders
-├── hooks/                # React Query hooks (one file per hook + index.ts barrel)
-│   ├── <useHook>.ts
-│   └── index.ts
+├── hooks/                # React Query hooks — one file per hook, imported by filename
+│   └── <useHook>.ts      # no index.ts barrel; consumers do `import { useFoo } from './hooks/useFoo'`
 ├── components/           # UI components composed by the module's entry
 │   ├── <Component>.tsx                  # single-file component — flat
 │   └── <Parent>/                        # folder only when there are nested subcomponents
